@@ -9,6 +9,15 @@
   "author": "Eri Soyemi",
   "license": "ISC",
   "dependencies": {
+    "base64-stream": "^1.0.0",
+    "bluebird": "^3.7.2",
+    "dotenv": "^16.0.1",
+    "emailjs-imap-client": "^3.1.0",
+    "imap": "^0.8.19",
+    "imap-server": "^0.0.1",
+    "imap-simple": "^5.1.0",
+    "lodash": "^4.17.21",
+    "mailparser": "^3.5.0",
     "node-imap": "^0.9.6"
   }
 }
