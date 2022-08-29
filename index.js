@@ -5,10 +5,14 @@ var inspect = require('util').inspect;
 var fs = require ('fs');
 var base64 = require('base64-stream');
 Promise.longStackTraces();
+require('dotenv').config()
+
+const myPwd = process.env.PWD;
+const myMail = 'erisoyemi@gmail.com';
 
 var imapConfig = {
-    user: 'erisoyemi@gmail.com',
-    password: "oqufwcbqkgmajzvr",
+    user: myMail,
+    password: myPwd,
     host: 'imap.gmail.com',
     port: 993,
     tls: true,
