@@ -1,4 +1,4 @@
-const { parseBODYSTRUCTURE } = require('emailjs-imap-client/dist/command-parser');
+//const { parseBODYSTRUCTURE } = require('emailjs-imap-client/dist/command-parser');
 
 require('dotenv').config()
 
@@ -7,6 +7,9 @@ const fs = require('fs'), fileStream = require('util').inspect;
 
 const myMail = 'erisoyemi@gmail.com';
 const myPwd = process.env.PWD;
+const inbox = [];
+const components =[];
+let count = 0;
 
 let mailServer = new Imap({
   user: myMail,
@@ -22,6 +25,10 @@ let mailServer = new Imap({
   console.log('Source Server Error:- ', err);
 });
 
+function getinbox() {
+  
+}
+
 function openInbox(cb) {
   mailServer.openBox('INBOX', true, cb);
 }
@@ -30,7 +37,7 @@ mailServer.once('ready', function() {
 
   mailServer.openBox('INBOX', true, function(err, box){
     if (err) throw err;
-    mailServer.search([ 'SEEN', ['SINCE', 'August 29, 2022'] ], function(err, results) { 
+    mailServer.search([ 'SEEN', ['SINCE', 'September 03, 2022'] ], function(err, results) { 
       if (err) throw err;
       var f = mailServer.fetch(results, { bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE BODY)' });
       f.on('message', function (msg, seqno) {
@@ -44,9 +51,12 @@ mailServer.once('ready', function() {
             });
 
             stream.once('end', function(){
-                console.log(prefix + 'Parsed header: %s', inspect(Imap.parseHeader(buffer)));
+                inbox.push(prefix +  inspect(Imap.parseHeader(buffer)));
             });
         });
+        count = count + 1;
+        //inbox.push(count)
+        
     });
     f.once('error', function (err){
         console.log('Fetch error: ' + err);
@@ -54,6 +64,7 @@ mailServer.once('ready', function() {
 
     f.once('end', function(){
         console.log('Done fetching all messages!');
+        console.log(inbox)
         mailServer.end();
     });
     });
@@ -69,3 +80,5 @@ mailServer.once('ready', function() {
   });
 
   mailServer.connect();
+
+module.export = {inbox};
